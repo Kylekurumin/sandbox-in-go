@@ -15,49 +15,49 @@ type Options struct {
 
 type Option func(*Options)
 
-func CPU(cpu uint64) Option {
+func WithCPU(cpu uint64) Option {
 	return func(opt *Options) {
 		opt.CPU = cpu
 	}
 }
 
-func CPUHard(cpuHard uint64) Option {
+func WithCPUHard(cpuHard uint64) Option {
 	return func(opt *Options) {
 		opt.CPUHard = cpuHard
 	}
 }
 
-func Data(data uint64) Option {
+func WithData(data uint64) Option {
 	return func(opt *Options) {
 		opt.Data = data
 	}
 }
 
-func FileSize(fileSize uint64) Option {
+func WithFileSize(fileSize uint64) Option {
 	return func(opt *Options) {
 		opt.FileSize = fileSize
 	}
 }
 
-func StackSize(stackSize uint64) Option {
+func WithStackSize(stackSize uint64) Option {
 	return func(opt *Options) {
 		opt.StackSize = stackSize
 	}
 }
 
-func AddressSpace(addressSpace uint64) Option {
+func WithAddressSpace(addressSpace uint64) Option {
 	return func(opt *Options) {
 		opt.AddressSpace = addressSpace
 	}
 }
 
-func OpenFile(openFile uint64) Option {
+func WithOpenFile(openFile uint64) Option {
 	return func(opt *Options) {
 		opt.OpenFile = openFile
 	}
 }
 
-func DisableCore(isDisable bool) Option {
+func WithDisableCore(isDisable bool) Option {
 	return func(opt *Options) {
 		opt.DisableCore = isDisable
 	}
