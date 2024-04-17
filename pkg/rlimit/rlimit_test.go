@@ -2,6 +2,7 @@ package rlimit
 
 import (
 	"github.com/stretchr/testify/assert"
+	"syscall"
 	"testing"
 )
 
@@ -69,6 +70,38 @@ func TestSetRLimits(t *testing.T) {
 		DisableCore:  true,
 	}
 
-	err := SetRLimits(opts.PrepareRLimitHandler())
+	handlers := opts.PrepareRLimitHandler()
+
+	err := SetRLimits(handlers)
 	assert.Nil(t, err)
+
+	rlimit := &syscall.Rlimit{}
+
+	_ = syscall.Getrlimit(syscall.RLIMIT_CPU, rlimit)
+	assert.Equal(t, rlimit.Cur, uint64(1))
+	assert.Equal(t, rlimit.Max, uint64(2))
+
+	_ = syscall.Getrlimit(syscall.RLIMIT_DATA, rlimit)
+	assert.Equal(t, rlimit.Cur, uint64(3))
+	assert.Equal(t, rlimit.Max, uint64(3))
+
+	_ = syscall.Getrlimit(syscall.RLIMIT_FSIZE, rlimit)
+	assert.Equal(t, rlimit.Cur, uint64(4))
+	assert.Equal(t, rlimit.Max, uint64(4))
+
+	_ = syscall.Getrlimit(syscall.RLIMIT_STACK, rlimit)
+	assert.Equal(t, rlimit.Cur, uint64(5))
+	assert.Equal(t, rlimit.Max, uint64(5))
+
+	_ = syscall.Getrlimit(syscall.RLIMIT_AS, rlimit)
+	assert.Equal(t, rlimit.Cur, uint64(6))
+	assert.Equal(t, rlimit.Max, uint64(6))
+
+	_ = syscall.Getrlimit(syscall.RLIMIT_NOFILE, rlimit)
+	assert.Equal(t, rlimit.Cur, uint64(7))
+	assert.Equal(t, rlimit.Max, uint64(7))
+
+	_ = syscall.Getrlimit(syscall.RLIMIT_CORE, rlimit)
+	assert.Equal(t, rlimit.Cur, uint64(0))
+	assert.Equal(t, rlimit.Max, uint64(0))
 }
